@@ -1,0 +1,28 @@
+{
+    "name": "neam/yii-dna-debug-modes-and-error-handling",
+    "description": "Provides easy debug of redirects and general application flow through logs as well as user and developer friendly error handling in production.",
+    "keywords": ["php", "yii", "dna", "debug", "error-handling"],
+    "homepage": "https://github.com/neam/yii-dna-debug-modes-and-error-handling",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Fredrik Wollsén",
+            "email": "fredrik@neam.se",
+            "homepage": "http://www.neam.se"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "components/",
+            "exceptions/",
+            "traits/"
+        ]
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "crisu83/yii-sentry": "dev-master"
+    },
+    "require-dev": {
+    }
+}
