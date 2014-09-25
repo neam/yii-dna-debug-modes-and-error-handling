@@ -1,6 +1,6 @@
 <?php
 
-class YiiDnaWebApplication extends WebAppliction
+class YiiDnaWebApplication extends CWebApplication
 {
     use YiiDnaWebApplicationTrait;
 }

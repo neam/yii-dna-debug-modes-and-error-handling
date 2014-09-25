@@ -1,7 +1,5 @@
 <?php
 
-Yii::import('vendor.crisu83.yii-sentry.components.SentryErrorHandler');
-
 class YiiDnaErrorHandler extends SentryErrorHandler
 {
 

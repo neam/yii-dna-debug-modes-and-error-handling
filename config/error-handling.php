@@ -2,6 +2,7 @@
 
 // Error handler
 
+$config['import'][] = 'vendor.crisu83.yii-sentry.components.SentryErrorHandler';
 $config['components']['sentry'] = array(
     'dns' => SENTRY_DSN,
     // the following two lines make sure that the sentry component is active
