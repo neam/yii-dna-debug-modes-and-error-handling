@@ -1,6 +1,6 @@
 <?php
 
-trait YiiDnaHttpRequest
+trait YiiDnaHttpRequestTrait
 {
 
     public function redirect($url, $terminate = true, $statusCode = 302)
