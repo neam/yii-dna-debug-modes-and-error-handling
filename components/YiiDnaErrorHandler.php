@@ -3,6 +3,15 @@
 class YiiDnaErrorHandler extends SentryErrorHandler
 {
 
+    public function init()
+    {
+        parent::init();
+        if (!(in_array('YiiDnaWebApplicationTrait', class_uses(Yii::app())))) {
+            throw new CException('yii-dna-debug-modes-and-error-handling is activated but the main application class does not use the required trait for the error handling to work as expected. Refer to the README for instructions.');
+        }
+
+    }
+
     public function onShutdown()
     {
         parent::onShutdown();

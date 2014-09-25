@@ -1,6 +1,6 @@
 <?php
 
-class RestrictedAccessModule extends CWebModule
+class ErrorModule extends CWebModule
 {
     public $defaultController = 'default';
 
