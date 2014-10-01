@@ -2,7 +2,11 @@
 
 // Error handler
 
+$config['import'][] = 'vendor.neam.yii-dna-debug-modes-and-error-handling.components.*';
+$config['import'][] = 'vendor.neam.yii-dna-debug-modes-and-error-handling.exceptions.*';
+$config['import'][] = 'vendor.neam.yii-dna-debug-modes-and-error-handling.traits.YiiDnaWebApplicationTrait';
 $config['import'][] = 'vendor.crisu83.yii-sentry.components.SentryErrorHandler';
+$config['import'][] = 'vendor.crisu83.yii-sentry.components.SentryClient';
 $config['components']['sentry'] = array(
     'class' => '\SentryClient',
     'dns' => SENTRY_DSN,
