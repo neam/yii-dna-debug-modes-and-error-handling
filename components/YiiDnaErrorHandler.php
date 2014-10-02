@@ -2,14 +2,17 @@
 
 class YiiDnaErrorHandler extends SentryErrorHandler
 {
+    /**
+     * @var string the class name of the application trait the the current app must use with this error handler.
+     */
+    protected $required_application_trait = 'YiiDnaRestApplicationTrait';
 
     public function init()
     {
         parent::init();
-        if (!(in_array('YiiDnaWebApplicationTrait', class_uses(Yii::app())))) {
+        if (!(in_array($this->required_application_trait, class_uses(Yii::app())))) {
             throw new CException('yii-dna-debug-modes-and-error-handling is activated but the main application class does not use the required trait for the error handling to work as expected. Refer to the README for instructions.');
         }
-
     }
 
     public function onShutdown()
