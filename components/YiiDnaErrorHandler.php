@@ -5,8 +5,11 @@ class YiiDnaErrorHandler extends SentryErrorHandler
     /**
      * @var string the class name of the application trait the the current app must use with this error handler.
      */
-    protected $required_application_trait = 'YiiDnaRestApplicationTrait';
+    protected $required_application_trait = 'YiiDnaWebApplicationTrait';
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -15,13 +18,26 @@ class YiiDnaErrorHandler extends SentryErrorHandler
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onShutdown()
     {
         parent::onShutdown();
+        $this->handleShutdown();
+    }
 
+    /**
+     * Handler for the shutdown event.
+     * This is a separate function to make it possible to extend the functionality but keep calling
+     * SentryErrorHandler::onShutdown().
+     *
+     * @throws CException if the shutdown cannot be handled.
+     */
+    protected function handleShutdown()
+    {
         $error = error_get_last();
         if ($error !== null) {
-
             // Useful for development purposes
             //var_dump($error, $this->getSentryClient()->getLoggedEventIds());
 
@@ -40,17 +56,13 @@ class YiiDnaErrorHandler extends SentryErrorHandler
             // at a white screen of death
             $ids = http_build_query($publicInfo);
 
+            // todo: fix hard-coded path
             if (strpos(Yii::app()->request->requestUri, "site/error") === false) {
                 header("Location: " . Yii::app()->request->baseUrl . "/site/error?$ids");
             } else {
                 // Error when loading site/error - we can't do much but throw an exception about the error
                 throw new CException("Error when loading site/error: " . print_r($error, true));
             }
-
-
         }
-
     }
-
-
 } 

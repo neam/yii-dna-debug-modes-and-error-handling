@@ -15,6 +15,17 @@ class YiiDnaRestErrorHandler extends YiiDnaErrorHandler
     /**
      * @inheritdoc
      */
+    public function handleShutdown()
+    {
+        $error = error_get_last();
+        if ($error !== null) {
+            // todo: can we handle these fatal errors with a REST response??
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     protected function handleError($event)
     {
         // We need to do the sentry capturing here as the parent handler will eventually call the Yii default
