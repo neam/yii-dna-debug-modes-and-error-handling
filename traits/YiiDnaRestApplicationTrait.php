@@ -27,6 +27,15 @@ trait YiiDnaRestApplicationTrait
     );
 
     /**
+     * @var array additional headers returned when sending response.
+     * @see YiiDnaRestApplicationTrait::sendResponse
+     */
+    public $responseHeaders = array(
+        'Access-Control-Allow-Origin: *',
+        'Access-Control-Allow-Headers: Authorization, Origin, Content-Type, Accept',
+    );
+
+    /**
      * @inheritdoc
      */
     public function displayError($code, $message, $file, $line)
@@ -79,7 +88,8 @@ trait YiiDnaRestApplicationTrait
     {
         $response = $this->getResponse();
         $response->setStatus($statusCode);
-        foreach ($response->getHeaders() as $header) {
+        $headers = array_merge($response->getHeaders(), $this->responseHeaders);
+        foreach ($headers as $header) {
             header($header);
         }
         echo $response->setParams($data)->getBody();
