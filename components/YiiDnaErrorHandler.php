@@ -32,7 +32,7 @@ class YiiDnaErrorHandler extends SentryErrorHandler
      * This is a separate function to make it possible to extend the functionality but keep calling
      * SentryErrorHandler::onShutdown().
      *
-     * @throws CException if the shutdown cannot be handled.
+     * @throws CException if the redirect to the friendly error page can't be realized.
      */
     protected function handleShutdown()
     {
@@ -56,9 +56,20 @@ class YiiDnaErrorHandler extends SentryErrorHandler
             // at a white screen of death
             $ids = http_build_query($publicInfo);
 
+            $isFatal = ($error["type"] == E_ERROR);
+
             // todo: fix hard-coded path
             if (strpos(Yii::app()->request->requestUri, "site/error") === false) {
-                header("Location: " . Yii::app()->request->baseUrl . "/site/error?$ids");
+
+                $url = Yii::app()->request->baseUrl . "/site/error?$ids";
+                if (!headers_sent($filename, $linenum)) {
+                    header("Location: $url");
+                    exit;
+                } else {
+                    throw new CException("Shutdown handler error redirect to $url failed since headers were sent in $filename on line $linenum. Error: " . print_r($error, true));
+                    exit;
+                }
+
             } else {
                 // Error when loading site/error - we can't do much but throw an exception about the error
                 throw new CException("Error when loading site/error: " . print_r($error, true));
