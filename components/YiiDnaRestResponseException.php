@@ -6,23 +6,12 @@
 class YiiDnaRestResponseException extends YiiDnaRestResponse
 {
     /**
-     * @var string the type of exception, i.e. the exception class name.
-     */
-    public $type;
-
-    /**
-     * @var int the exception code.
-     * @link http://php.net/manual/en/exception.getcode.php
-     */
-    public $code;
-
-    /**
      * @var int the exception http status code.
      */
     public $status;
 
     /**
-     * @var string the exception message (will include file and line if YII_DEBUG is true).
+     * @var string the exception message (will include real error, file and line if YII_DEBUG is true).
      * @link http://php.net/manual/en/exception.getmessage.php
      */
     public $message;
@@ -39,12 +28,11 @@ class YiiDnaRestResponseException extends YiiDnaRestResponse
      */
     public function init(Exception $e)
     {
-        $this->type = get_class($e);
-        $this->code = $e->getCode();
         $this->status = ($e instanceof CHttpException) ? $e->statusCode : 500;
-        $this->message = $e->getMessage();
+        $this->message = self::getDefaultHttpStatusMessage($this->status);
         if (YII_DEBUG) {
-            $this->message .= " ({$e->getFile()}:{$e->getLine()})";
+            $className = get_class($e);
+            $this->message =  "{$className}({$e->getCode()}): {$e->getMessage()} ({$e->getFile()}:{$e->getLine()})";
             $this->trace = $e->getTrace();
         }
     }

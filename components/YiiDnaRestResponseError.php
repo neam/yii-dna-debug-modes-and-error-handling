@@ -6,22 +6,12 @@
 class YiiDnaRestResponseError extends YiiDnaRestResponse
 {
     /**
-     * @var string the type of error, e.g. "PHP Error".
-     */
-    public $type = 'PHP Error';
-
-    /**
-     * @var int the error code.
-     */
-    public $code;
-
-    /**
      * @var int the error http status code, e.g. 500 (Internal Server Error).
      */
     public $status = 500;
 
     /**
-     * @var string the message (will include file and line if YII_DEBUG is true).
+     * @var string the message (will include real error, file and line if YII_DEBUG is true).
      */
     public $message;
 
@@ -34,7 +24,9 @@ class YiiDnaRestResponseError extends YiiDnaRestResponse
      */
     public function init($code, $message, $file, $line)
     {
-        $this->code = $code;
-        $this->message = YII_DEBUG ? "{$message} ({$file}:{$line})" : $message;
+        $this->message = self::getDefaultHttpStatusMessage($this->status);
+        if (YII_DEBUG) {
+            $this->message = "PHP Error({$code}): {$message} ({$file}:{$line})";
+        }
     }
 }
