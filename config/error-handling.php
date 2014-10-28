@@ -24,3 +24,6 @@ $config['components']['errorHandler'] = array(
 $config['modules']['error'] = array(
     'class' => 'vendor.neam.yii-dna-debug-modes-and-error-handling.modules.error.ErrorModule',
 );
+
+// hide errors otherwise the redirects upon fatal errors will not work
+ini_set('display_errors', false);
