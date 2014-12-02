@@ -2,6 +2,8 @@
 
 namespace neam\util;
 
+use Yii;
+
 /**
  * Contains shorthands for commonly used snippets of code used during debugging
  * U is shorthand for utility
