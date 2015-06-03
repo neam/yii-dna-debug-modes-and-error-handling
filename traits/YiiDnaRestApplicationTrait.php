@@ -27,13 +27,13 @@ trait YiiDnaRestApplicationTrait
     );
 
     /**
-     * @var array additional headers returned when sending response.
-     * @see YiiDnaRestApplicationTrait::sendResponse
+     * So that errors can be returned also when CORS is being used
+     * @throws Exception
      */
-    public $responseHeaders = array(
-        'Access-Control-Allow-Origin: *',
-        'Access-Control-Allow-Headers: Authorization, Origin, Content-Type, Accept',
-    );
+    public function sendCorsHeaders()
+    {
+        throw new Exception("sendCorsHeaders() needs to be implemented in your WebApplication");
+    }
 
     /**
      * @inheritdoc
@@ -88,10 +88,11 @@ trait YiiDnaRestApplicationTrait
     {
         $response = $this->getResponse();
         $response->setStatus($statusCode);
-        $headers = array_merge($response->getHeaders(), $this->responseHeaders);
+        $headers = $response->getHeaders();
         foreach ($headers as $header) {
             header($header);
         }
+        $this->sendCorsHeaders();
         echo $response->setParams($data)->getBody();
     }
 }
