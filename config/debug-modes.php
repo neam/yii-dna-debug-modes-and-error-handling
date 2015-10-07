@@ -61,5 +61,19 @@ if (DEBUG_LOGS) {
         'levels' => 'trace, error, warning', //trace,
     );
 
+    // tmp verbose output to stdout/stderr
+
+    /*
+    $config['components']['log']['routes'][] = array(
+        'class' => '\neam\yii_streamlog\LogRoute', // output to stdout/err
+        'levels' => 'trace',
+    );
+    $config['components']['log']['routes'][] = array(
+        'class' => '\neam\yii_streamlog\LogRoute', // output to stdout/err
+        'categories' => 'system.db.*',
+        'except' => 'system.db.ar.*', // shows all db level logs but nothing in the ar category
+    );
+    */
+
 }
 
