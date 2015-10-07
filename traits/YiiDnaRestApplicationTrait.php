@@ -8,6 +8,11 @@
 trait YiiDnaRestApplicationTrait
 {
     use YiiDnaWebApplicationTrait;
+    /**
+     * So that errors can be returned also when CORS is being used
+     * @throws Exception
+     */
+    use SendCorsHeadersMethodTrait;
 
     /**
      * @var string The API response format, i.e. json or xml.
@@ -25,15 +30,6 @@ trait YiiDnaRestApplicationTrait
             'class' => 'YiiDnaRestResponseException'
         ),
     );
-
-    /**
-     * So that errors can be returned also when CORS is being used
-     * @throws Exception
-     */
-    public function sendCorsHeaders()
-    {
-        throw new Exception("sendCorsHeaders() needs to be implemented in your WebApplication");
-    }
 
     /**
      * @inheritdoc
